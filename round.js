@@ -1,32 +1,25 @@
 const Word = require("./Word");
 const Letter = require("./Letter");
 
-function Round(currentWord, lettersGuessed, guessCount, notDone, didWeWin) {
-    this.currentWord = currentWord;
-    this.lettersGuessed = lettersGuessed;
+function Round() {
+    this.currentWord = new Word();
+    this.currentWord.setup();
+    this.lettersGuessed = ['a','b','g','f','d'];
     this.guessCount = 8;
     this.notDone = true;
     this.didWeWin = false;
-    this.roundSetup = function() {
-        // let currentWord = new Word();
-        // currentWord.getWord();
-        let newLetter = new Letter();
-        newLetter.setUnderscores();
-    },
     this.useGuess = function() {
-        //if userguess is incorrect {
+        this.currentWord.update(this.lettersGuessed);
         this.guessCount--;
-        // }
-    },
-    this.checkWord = function(userGuess) {
-        for (var i = 0; i < this.currentWord.length; i++) {
-            //compare currentWord to userguess?
-        }
     }
 }
 
 let newRound = new Round();
-newRound.roundSetup();
-
-
+newRound = new Round();
+// newRound.roundSetup();
+console.log(newRound.currentWord.word);
+console.log("Before updating with current guesses: "+ newRound.currentWord.display());
+newRound.useGuess();
+console.log(newRound.guessCount);
+console.log("After updating: "+ newRound.currentWord.display());
 module.exports = Round;

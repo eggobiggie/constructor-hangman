@@ -1,4 +1,4 @@
-const Letter = require("./Letter")
+const Letter = require("./Letter");
 
 function Word() {
   this.getWord = function() {
@@ -42,18 +42,5 @@ Word.prototype.display = function(){
   }
   return displayString;
 }
-
-module.exports = Word;
-
-let randomWord = new Word();
-randomWord.setup();
-
-let guessedLetters = ['a','b','g','f','d'];
-console.log(randomWord.word);
-
-console.log("Before updating with current guesses: "+ randomWord.display());
-randomWord.update(guessedLetters);
-console.log("After updating: "+ randomWord.display());
-
 
 module.exports = Word;
