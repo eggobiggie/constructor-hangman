@@ -2,7 +2,7 @@ const Letter = require("./Letter");
 
 function Word() {
   this.getWord = function() {
-    let wordArray = ["camembert", "wensleydale", "mozzarella", "provolone", "gorgonzola", "manchego", "gouda", "monterey jack", "havarti", "marscapone", "ricotta", "muenster", "roquefort", "asiago"];
+    let wordArray = ["camembert", "wensleydale", "mozzarella", "provolone", "gorgonzola", "manchego", "gouda", "havarti", "marscapone", "ricotta", "muenster", "roquefort", "asiago"];
     this.word = wordArray[Math.floor(Math.random() * wordArray.length)];
     return this.word;
   },
@@ -23,20 +23,25 @@ Word.prototype.setup = function() {
 }
 
 Word.prototype.update = function(inputLetters) {
-  for(wordIndex = 0; wordIndex < this.arrayOfLetters.length; wordIndex++) {
-    for(guessIndex = 0; guessIndex < inputLetters.length; guessIndex++) {
-      if(inputLetters[guessIndex] === this.word[wordIndex]) {
-        this.arrayOfLetters[wordIndex].displayLetter = this.arrayOfLetters[wordIndex].correctLetter;
-        console.log("Letter: " + this.arrayOfLetters[wordIndex].correctLetter);
-      }
+    let goodGuess = false;
+    for(wordIndex = 0; wordIndex < this.arrayOfLetters.length; wordIndex++) {
+        if(inputLetters[inputLetters.length-1] === this.word[wordIndex]) {
+            this.arrayOfLetters[wordIndex].displayLetter = this.arrayOfLetters[wordIndex].correctLetter;
+            goodGuess = true;
+        }
     }
-  }
+    if(goodGuess) {
+        console.log("CORRECT");
+    }
+    else {
+        console.log("TRY AGAIN");
+    }
 }
 
-Word.prototype.display = function(){
+Word.prototype.display = function() {
   let displayString = "";
   let currentOutput = "";
-  for(displayIndex = 0; displayIndex < this.arrayOfLetters.length; displayIndex++){
+  for(displayIndex = 0; displayIndex < this.arrayOfLetters.length; displayIndex++) {
     currentOutput = this.arrayOfLetters[displayIndex].displayLetter;
     displayString += (currentOutput+" ");
   }

@@ -1,73 +1,32 @@
 const inquirer = require('inquirer');
-const Word = require("./Word");
-const Letter = require("./Letter");
 const Round = require("./Round");
 
-// let currentWord = new Word();
-// currentWord.getWord();
-
-// console.log(currentWord.word);
-
-
-// Game loop in kindasortapesudocode:
-// {
-//   Setup:
-//     let currentRound = new Round()
-//     currentRound.setup()
-//   Play:while(currentRound.notDone){
-//     use inquirer to get userGuess
-//     currentRound.useAGuess()
-//     currentRound.checkWord(userGuess)
-//     Are We Done?
-//       if(currentRound.guessCounter > 0)
-//         currentRound.notDone = true
-//       else
-//         currentRound.notDone = false
-//       if(userDisplay === currentRound.word)  ( good spot for a prototype )
-//         currentRound.notDone = false
-//         win = true
-//   }
-//   Again:
-//     use inquirer to get Y or N from user
-//   if(N){
-//     exit?
-//   }
-// }
-
-
-// Game loop in english:
-// Setup:
-//   Generate new Word
-//     Set up new letter variables
-//   Reset guess counter
-//   Reset used guesses
-// Play:
-//   Guess a letter
-//   Update guess counter
-//   Update letter display
-// Loop decision:
-//   Finished Correct Answer?
-//     Yes - back to Setup
-//   Any guesses remaining?
-//     Yes: back to Play
-//     No: Play again/quit?
-//   Play again prompt answer:
-//     Yes - back to Setup
-//     No - exit
-
-
-
-// let newRound = new Round();
-// newRound.roundSetup();
-
-let exampleMessage = "this is a test"
-//INQUIRER
-inquirer.prompt([
-    {
+function fullRound() {
+   
+    let gamePrompt = [{
         type: 'input',
-        message: exampleMessage,
+        message: 'Guess a letter:',
         name: "word"
+    }];
+
+    let newRound = new Round();
+    console.log(newRound.currentWord.word);
+    console.log("Before updating with current guesses: "+ newRound.currentWord.display());
+    console.log(newRound.guessCount);
+    var doGuess = function() {
+        if(newRound.guessCount > 0) {
+            console.log("inside doGuess with "+newRound.guessCount)
+            inquirer.prompt(gamePrompt).then(answers => {
+                // console.log(answers.word[0]);
+                newRound.lettersGuessed.push(answers.word[0]);
+                console.log(newRound.lettersGuessed);
+                newRound.useGuess();
+                console.log(newRound.currentWord.display());
+                doGuess();
+            });
+        }
     }
-]).then(answers => {
-    console.log(JSON.stringify(answers, null, ' '));
-});
+    doGuess();
+}
+
+fullRound();
