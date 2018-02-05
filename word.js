@@ -1,5 +1,6 @@
 const Letter = require("./Letter");
 
+//Word constructor generates the word and turns it into an array
 function Word() {
   this.getWord = function() {
     let wordArray = ["camembert", "wensleydale", "mozzarella", "provolone", "gorgonzola", "manchego", "gouda", "havarti", "marscapone", "ricotta", "muenster", "roquefort", "asiago"];
@@ -22,6 +23,7 @@ Word.prototype.setup = function() {
     this.arrayOfLetters = this.arrayify();
 }
 
+//Checking the word vs the user's guess
 Word.prototype.update = function(inputLetters) {
     let goodGuess = false;
     for(wordIndex = 0; wordIndex < this.arrayOfLetters.length; wordIndex++) {
@@ -30,14 +32,15 @@ Word.prototype.update = function(inputLetters) {
             goodGuess = true;
         }
     }
-    if(goodGuess) {
+    if (goodGuess) {
         console.log("CORRECT");
+    } else {
+        console.log("NOPE TRY AGAIN!");
     }
-    else {
-        console.log("TRY AGAIN");
-    }
+    return goodGuess;
 }
 
+//Formats the word into spaces and underscores
 Word.prototype.display = function() {
   let displayString = "";
   let currentOutput = "";

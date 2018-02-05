@@ -1,6 +1,23 @@
 const inquirer = require('inquirer');
 const Round = require("./Round");
 
+//Asks the user whether they want to start a round or quit
+function gameStart() {
+
+    inquirer.prompt([
+        {
+        type: 'confirm',
+        message: 'Would you like to play a game?',
+        name: 'confirm'
+        }
+    ]).then(answers => {
+        if (answers.confirm) {
+            fullRound();
+        } 
+    });
+}
+
+//Runs a full round of the game
 function fullRound() {
    
     let gamePrompt = [{
@@ -10,23 +27,21 @@ function fullRound() {
     }];
 
     let newRound = new Round();
-    console.log(newRound.currentWord.word);
-    console.log("Before updating with current guesses: "+ newRound.currentWord.display());
-    console.log(newRound.guessCount);
-    var doGuess = function() {
-        if(newRound.guessCount > 0) {
-            console.log("inside doGuess with "+newRound.guessCount)
+    var playRound = function() {
+        if (newRound.notDone) {
             inquirer.prompt(gamePrompt).then(answers => {
-                // console.log(answers.word[0]);
                 newRound.lettersGuessed.push(answers.word[0]);
-                console.log(newRound.lettersGuessed);
                 newRound.useGuess();
+                console.log("Guesses remaining: " + newRound.guessCount);
                 console.log(newRound.currentWord.display());
-                doGuess();
+                newRound.updateGameCondition();
+                playRound();
             });
+        } else {
+            gameStart();
         }
     }
-    doGuess();
+    playRound();
 }
 
-fullRound();
+gameStart();
